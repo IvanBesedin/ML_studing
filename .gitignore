@@ -1,0 +1,26 @@
+# DVC
+.dvc/cache
+.dvc/tmp
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python IDE
+.vscode/
+.idea/
+*.pyc
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
