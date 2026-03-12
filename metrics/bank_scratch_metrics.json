@@ -1,0 +1,10 @@
+{
+  "train_accuracy": 0.8503751819912644,
+  "train_auc": 0.919856848320677,
+  "test_accuracy": 0.8316166592028661,
+  "test_auc": 0.908359409564413,
+  "test_precision": 0.8001760563380281,
+  "test_recall": 0.8591682419659735,
+  "test_f1": 0.8286235186873291,
+  "training_type": "from_scratch"
+}

@@ -1,0 +1,35 @@
+# ============================================
+# ПАРАМЕТРЫ МОДЕЛИ
+# ============================================
+hidden_sizes: [64, 32, 16]
+dropout_rate: 0.3
+
+# ============================================
+# ПАРАМЕТРЫ ОБУЧЕНИЯ (ОБЩИЕ)
+# ============================================
+batch_size: 64
+num_epochs: 50
+learning_rate: 0.001
+step_size: 30
+gamma: 0.1
+
+# ============================================
+# ПАРАМЕТРЫ FINE-TUNING
+# ============================================
+fine_tuning_num_epochs: 30
+fine_tuning_learning_rate: 0.0005
+fine_tuning_step_size: 30
+fine_tuning_gamma: 0.1
+num_frozen_layers: 1
+freeze_bn: true
+
+# ============================================
+# ПАРАМЕТРЫ ДЛЯ BANK (ОБУЧЕНИЕ С 0)
+# ============================================
+hidden_sizes_bank: [32, 16, 8]
+dropout_rate_bank: 0.3
+batch_size_bank: 64
+num_epochs_bank: 30
+learning_rate_bank: 0.001
+step_size_bank: 30
+gamma_bank: 0.1

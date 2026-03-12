@@ -1,0 +1,217 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare_data.py
+    deps:
+    - path: data/raw/adult.csv
+      hash: md5
+      md5: c214b8388397bac6f467af5cf9d4eb0b
+      size: 4104734
+    - path: data/raw/bank.csv
+      hash: md5
+      md5: 8d1cc2ceea5c63e650e4d314250efdd3
+      size: 918960
+    - path: src/prepare_data.py
+      hash: md5
+      md5: 889ee9ab98d8a511a4eb0a7cd7ce0d54
+      size: 2588
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: bd16f5316444a7685a1e26e8ebf1f0a4
+      size: 7754036
+    - path: data/processed/train.csv
+      hash: md5
+      md5: a84f6d6c8a557a1e26c58b4d78954502
+      size: 31010685
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed/train.csv
+      hash: md5
+      md5: a84f6d6c8a557a1e26c58b4d78954502
+      size: 31010685
+    - path: params.yaml
+      hash: md5
+      md5: c9d78baca3c5666bf3e8396d75bd81f4
+      size: 238
+    - path: src/train.py
+      hash: md5
+      md5: a9ebd6595633145cb3265d6a4c1845e1
+      size: 6271
+    params:
+      params.yaml:
+        batch_size: 64
+        dropout_rate: 0.3
+        gamma: 0.1
+        hidden_sizes:
+        - 64
+        - 32
+        - 16
+        learning_rate: 0.001
+        num_epochs: 50
+        step_size: 30
+    outs:
+    - path: models/adult_pretrained.pth
+      hash: md5
+      md5: dc5ebab3fe460431f9011a5a59085edd
+      size: 35140
+  prepare_adult:
+    cmd: python src/prepare_adult_data.py
+    deps:
+    - path: data/raw/adult.csv
+      hash: md5
+      md5: c214b8388397bac6f467af5cf9d4eb0b
+      size: 4104734
+    - path: src/prepare_adult_data.py
+      hash: md5
+      md5: 4917c05c40ce726cbe4274acad8247e6
+      size: 2455
+    outs:
+    - path: data/processed/adult
+      hash: md5
+      md5: dd18273da30546f21da7d2e0b3ec1261.dir
+      size: 13285400
+      nfiles: 4
+    - path: models/adult_scaler.pkl
+      hash: md5
+      md5: c7b2c7d19e714f7862e064dc6133a05d
+      size: 3239
+  train_adult:
+    cmd: python src/train_adult.py
+    deps:
+    - path: data/processed/adult
+      hash: md5
+      md5: dd18273da30546f21da7d2e0b3ec1261.dir
+      size: 13285400
+      nfiles: 4
+    - path: params.yaml
+      hash: md5
+      md5: e44049ce6fdcbfe9fbadb0cd4faf6915
+      size: 1010
+    - path: src/train_adult.py
+      hash: md5
+      md5: 627f611cbd2875f39db7b0c3217be5d1
+      size: 5476
+    params:
+      params.yaml:
+        batch_size: 64
+        dropout_rate: 0.3
+        gamma: 0.1
+        hidden_sizes:
+        - 64
+        - 32
+        - 16
+        learning_rate: 0.001
+        num_epochs: 50
+        step_size: 30
+    outs:
+    - path: metrics/adult_metrics.json
+      hash: md5
+      md5: eec62f824387bcca6e05398b02106610
+      size: 232
+    - path: models/adult_pretrained.pth
+      hash: md5
+      md5: 61fd9a3713e06d0dbc232a47986ed841
+      size: 33092
+  prepare_bank:
+    cmd: python src/prepare_bank_data.py
+    deps:
+    - path: data/raw/bank.csv
+      hash: md5
+      md5: 8d1cc2ceea5c63e650e4d314250efdd3
+      size: 918960
+    - path: src/prepare_bank_data.py
+      hash: md5
+      md5: 98066fd150f89b0930283d6f0b8189cc
+      size: 2423
+    outs:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: models/bank_scaler.pkl
+      hash: md5
+      md5: 029f46614cd8bb6f13dd0a06a8c29d1a
+      size: 2295
+  fine_tune:
+    cmd: python src/fine_tune.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: models/adult_pretrained.pth
+      hash: md5
+      md5: 61fd9a3713e06d0dbc232a47986ed841
+      size: 33092
+    - path: params.yaml
+      hash: md5
+      md5: e44049ce6fdcbfe9fbadb0cd4faf6915
+      size: 1010
+    - path: src/fine_tune.py
+      hash: md5
+      md5: ace3c738a9d2619b6734a39fa3e89aba
+      size: 8780
+    params:
+      params.yaml:
+        batch_size: 64
+        dropout_rate: 0.3
+        fine_tuning_gamma: 0.1
+        fine_tuning_learning_rate: 0.0005
+        fine_tuning_num_epochs: 30
+        fine_tuning_step_size: 30
+        freeze_bn: true
+        hidden_sizes:
+        - 64
+        - 32
+        - 16
+        num_frozen_layers: 1
+    outs:
+    - path: metrics/bank_finetune_metrics.json
+      hash: md5
+      md5: 7e93ad8b8970b573a676a4af66247b86
+      size: 268
+    - path: models/bank_finetuned.pth
+      hash: md5
+      md5: f9e80fa7ce00d441a489676e41c46989
+      size: 29966
+  train_bank_scratch:
+    cmd: python src/train_bank_scratch.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: params.yaml
+      hash: md5
+      md5: 55bb96f0e59f766f95332c6f84b01a1c
+      size: 392
+    - path: src/train_bank_scratch.py
+      hash: md5
+      md5: 04a856ac9c422fb37040ba44a2a853f0
+      size: 5824
+    params:
+      params.yaml:
+        batch_size: 64
+        dropout_rate: 0.3
+        gamma: 0.1
+        hidden_sizes:
+        - 64
+        - 32
+        - 16
+        learning_rate: 0.001
+        num_epochs: 50
+        step_size: 30
+    outs:
+    - path: metrics/bank_scratch_metrics.json
+      hash: md5
+      md5: 5d2f15fab4eec0d56dfe15657162569b
+      size: 302
+    - path: models/bank_from_scratch.pth
+      hash: md5
+      md5: 21a45d32ff0a4629bca4a845f6ff1c62
+      size: 16159

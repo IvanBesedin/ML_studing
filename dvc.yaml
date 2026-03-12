@@ -1,0 +1,96 @@
+stages:
+  # ============================================
+  # 1. ПОДГОТОВКА ДАННЫХ ADULT
+  # ============================================
+  prepare_adult:
+    cmd: python src/prepare_adult_data.py
+    deps:
+      - data/raw/adult.csv
+      - src/prepare_adult_data.py
+    outs:
+      - data/processed/adult
+      - models/adult_scaler.pkl
+
+  # ============================================
+  # 2. ОБУЧЕНИЕ МОДЕЛИ ADULT (ПРЕДОБУЧЕНИЕ)
+  # ============================================
+  train_adult:
+    cmd: python src/train_adult.py
+    deps:
+      - data/processed/adult
+      - src/train_adult.py
+      - params.yaml
+    outs:
+      - models/adult_pretrained.pth
+    metrics:
+      - metrics/adult_metrics.json:
+          cache: false
+    params:
+      - hidden_sizes
+      - dropout_rate
+      - batch_size
+      - num_epochs
+      - learning_rate
+      - step_size
+      - gamma
+
+  # ============================================
+  # 3. ПОДГОТОВКА ДАННЫХ BANK
+  # ============================================
+  prepare_bank:
+    cmd: python src/prepare_bank_data.py
+    deps:
+      - data/raw/bank.csv
+      - src/prepare_bank_data.py
+    outs:
+      - data/processed/bank
+      - models/bank_scaler.pkl
+
+  # ============================================
+  # 4. ОБУЧЕНИЕ МОДЕЛИ BANK С 0
+  # ============================================
+  train_bank_scratch:
+    cmd: python src/train_bank_scratch.py
+    deps:
+      - data/processed/bank
+      - src/train_bank_scratch.py
+      - params.yaml
+    outs:
+      - models/bank_from_scratch.pth
+    metrics:
+      - metrics/bank_scratch_metrics.json:
+          cache: false
+    params:
+      - hidden_sizes
+      - dropout_rate
+      - batch_size
+      - num_epochs
+      - learning_rate
+      - step_size
+      - gamma
+
+  # ============================================
+  # 5. FINE-TUNING НА BANK (С ПРЕДОБУЧЕНИЕМ НА ADULT)
+  # ============================================
+  fine_tune:
+    cmd: python src/fine_tune.py
+    deps:
+      - data/processed/bank
+      - models/adult_pretrained.pth
+      - src/fine_tune.py
+      - params.yaml
+    outs:
+      - models/bank_finetuned.pth
+    metrics:
+      - metrics/bank_finetune_metrics.json:
+          cache: false
+    params:
+      - hidden_sizes
+      - dropout_rate
+      - batch_size
+      - fine_tuning_num_epochs
+      - fine_tuning_learning_rate
+      - fine_tuning_step_size
+      - fine_tuning_gamma
+      - num_frozen_layers
+      - freeze_bn
