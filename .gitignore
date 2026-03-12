@@ -1,8 +1,34 @@
+# ─────────────────────────────────────
 # DVC
-.dvc/cache
-.dvc/tmp
+# ─────────────────────────────────────
+.dvc/cache/
+.dvc/tmp/
+.dvc/lock
 
+# ─────────────────────────────────────
+# Данные (игнорируем файлы, но НЕ .dvc)
+# ─────────────────────────────────────
+data/raw/*.csv
+data/raw/*.parquet
+data/raw/*.json
+!data/raw/*.csv.dvc
+!data/raw/*.parquet.dvc
+!data/raw/*.json.dvc
+
+data/processed/*
+!data/processed/*.dvc
+
+# ─────────────────────────────────────
+# Модели
+# ─────────────────────────────────────
+models/*.pkl
+models/*.pth
+models/*.h5
+!models/*.dvc
+
+# ─────────────────────────────────────
 # Python
+# ─────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
@@ -11,17 +37,24 @@ __pycache__/
 env/
 venv/
 *.egg-info/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Python IDE
-.vscode/
-.idea/
 *.pyc
 .pytest_cache/
 
+# ─────────────────────────────────────
+# Jupyter
+# ─────────────────────────────────────
+.ipynb_checkpoints/
+
+# ─────────────────────────────────────
+# IDE
+# ─────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─────────────────────────────────────
 # OS
+# ─────────────────────────────────────
 .DS_Store
 Thumbs.db
-!/data
