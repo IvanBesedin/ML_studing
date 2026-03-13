@@ -1,0 +1,129 @@
+{
+  "cv_results": {
+    "best_params": {
+      "C": 0.1,
+      "class_weight": {
+        "0": 1,
+        "1": 2
+      },
+      "max_iter": 1000,
+      "penalty": "l1",
+      "solver": "liblinear",
+      "tol": 0.0001
+    },
+    "best_cv_score": 0.8878474222256247,
+    "top_10_params": [
+      {
+        "rank_test_score": 1,
+        "mean_test_score": 0.8878474222256247,
+        "std_test_score": 0.0037131500627352516,
+        "param_solver": "liblinear",
+        "param_penalty": "l1",
+        "param_C": 0.1,
+        "weight_ratio": 2,
+        "param_max_iter": 5000
+      },
+      {
+        "rank_test_score": 1,
+        "mean_test_score": 0.8878474222256247,
+        "std_test_score": 0.0037131500627352516,
+        "param_solver": "liblinear",
+        "param_penalty": "l1",
+        "param_C": 0.1,
+        "weight_ratio": 2,
+        "param_max_iter": 1000
+      },
+      {
+        "rank_test_score": 3,
+        "mean_test_score": 0.887826045766519,
+        "std_test_score": 0.003713291348759592,
+        "param_solver": "saga",
+        "param_penalty": "elasticnet",
+        "param_C": 0.1,
+        "weight_ratio": 2,
+        "param_max_iter": 1000
+      },
+      {
+        "rank_test_score": 3,
+        "mean_test_score": 0.887826045766519,
+        "std_test_score": 0.003713291348759592,
+        "param_solver": "saga",
+        "param_penalty": "elasticnet",
+        "param_C": 0.1,
+        "weight_ratio": 2,
+        "param_max_iter": 5000
+      },
+      {
+        "rank_test_score": 5,
+        "mean_test_score": 0.8878020085934558,
+        "std_test_score": 0.0037167536647044774,
+        "param_solver": "liblinear",
+        "param_penalty": "l1",
+        "param_C": 0.1,
+        "weight_ratio": 4,
+        "param_max_iter": 5000
+      },
+      {
+        "rank_test_score": 5,
+        "mean_test_score": 0.8878020085934558,
+        "std_test_score": 0.0037167536647044774,
+        "param_solver": "liblinear",
+        "param_penalty": "l1",
+        "param_C": 0.1,
+        "weight_ratio": 4,
+        "param_max_iter": 1000
+      },
+      {
+        "rank_test_score": 7,
+        "mean_test_score": 0.8877929526852351,
+        "std_test_score": 0.003711763567552183,
+        "param_solver": "saga",
+        "param_penalty": "elasticnet",
+        "param_C": 0.1,
+        "weight_ratio": 4,
+        "param_max_iter": 5000
+      },
+      {
+        "rank_test_score": 7,
+        "mean_test_score": 0.8877929526852351,
+        "std_test_score": 0.003711763567552183,
+        "param_solver": "saga",
+        "param_penalty": "elasticnet",
+        "param_C": 0.1,
+        "weight_ratio": 4,
+        "param_max_iter": 1000
+      },
+      {
+        "rank_test_score": 9,
+        "mean_test_score": 0.8877332324273979,
+        "std_test_score": 0.0037041281379284526,
+        "param_solver": "saga",
+        "param_penalty": "elasticnet",
+        "param_C": 0.1,
+        "weight_ratio": 2,
+        "param_max_iter": 1000
+      },
+      {
+        "rank_test_score": 9,
+        "mean_test_score": 0.8877332324273979,
+        "std_test_score": 0.0037041281379284526,
+        "param_solver": "saga",
+        "param_penalty": "elasticnet",
+        "param_C": 0.1,
+        "weight_ratio": 2,
+        "param_max_iter": 5000
+      }
+    ],
+    "cv_time_seconds": 0.21131259933823632
+  },
+  "test_metrics": {
+    "Accuracy": 0.8047469771607703,
+    "Precision": 0.7512116316639742,
+    "Recall": 0.8790170132325141,
+    "F1-Score": 0.8101045296167247,
+    "ROC-AUC": 0.8880271889956963,
+    "PR-AUC": 0.8583501246799947
+  },
+  "total_time_seconds": 33.6151487827301,
+  "params_file": "params.yaml"
+}

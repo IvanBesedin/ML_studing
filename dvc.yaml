@@ -109,7 +109,23 @@ stages:
           cache: false
     params:
       - log_reg
-
+  # ============================================
+  # ЛОГИСТИЧЕСКАЯ РЕГРЕССИЯ (CROSS-VALIDATION)
+  # ============================================
+  cv_log_reg:
+    cmd: python src/cross_val/cv_log_reg.py
+    deps:
+      - data/processed/bank
+      - src/cross_val/cv_log_reg.py
+    # 🔧 НЕТ outs — модель не сохраняется!
+    metrics:
+      - metrics/cv_log_reg_metrics.json:
+          cache: false
+    params:
+      - cv_log_reg
+  # ============================================
+  # ДЕРЕВО РЕШЕНИЙ
+  # ============================================
   train_decision_tree:
     cmd: python src/classic_ml/train_decision_tree.py
     deps:
@@ -124,19 +140,20 @@ stages:
       - decision_tree
 
   # ============================================
-  # ЛОГИСТИЧЕСКАЯ РЕГРЕССИЯ (CROSS-VALIDATION)
+  # DECISION TREE (CROSS-VALIDATION)
   # ============================================
-  cv_log_reg:
-    cmd: python src/cross_val/cv_log_reg.py
+  cv_decision_tree:
+    cmd: python src/cross_val/cv_decision_tree.py
     deps:
       - data/processed/bank
-      - src/cross_valcv_log_reg.py
-    # 🔧 НЕТ outs — модель не сохраняется!
+      - src/cross_val/cv_decision_tree.py
     metrics:
-      - metrics/cv_log_reg_metrics.json:
+      - metrics/cv_decision_tree_metrics.json:
           cache: false
     params:
-      - cv_log_reg
+      - cv_decision_tree
+
+
 
 
   # ============================================
@@ -154,6 +171,20 @@ stages:
           cache: false
     params:
       - random_forest
+
+  # ============================================
+  # RANDOM FOREST (CROSS-VALIDATION)
+  # ============================================
+  cv_random_forest:
+    cmd: python src/cross_val/cv_random_forest.py
+    deps:
+      - data/processed/bank
+      - src/cross_val/cv_random_forest.py
+    metrics:
+      - metrics/cv_random_forest_metrics.json:
+          cache: false
+    params:
+      - cv_random_forest
   
   # ============================================
   # EXTRA TREES
@@ -170,6 +201,20 @@ stages:
           cache: false
     params:
       - extra_trees
+
+  # ============================================
+  # EXTRA TREES (CROSS-VALIDATION)
+  # ============================================
+  cv_extra_trees:
+    cmd: python src/cross_val/cv_extra_trees.py
+    deps:
+      - data/processed/bank
+      - src/cross_val/cv_extra_trees.py
+    metrics:
+      - metrics/cv_extra_trees_metrics.json:
+          cache: false
+    params:
+      - cv_extra_trees
   # ============================================
   # LIGHTGBM
   # ============================================
@@ -185,6 +230,20 @@ stages:
           cache: false
     params:
       - lightgbm
+
+  # ============================================
+  # LIGHTGBM (CROSS-VALIDATION)
+  # ============================================
+  cv_lightgbm:
+    cmd: python src/cross_val/cv_lightgbm.py
+    deps:
+      - data/processed/bank
+      - src/cross_val/cv_lightgbm.py
+    metrics:
+      - metrics/cv_lightgbm_metrics.json:
+          cache: false
+    params:
+      - cv_lightgbm
   # ============================================
   # GRADIENT BOOSTING
   # ============================================
@@ -200,6 +259,23 @@ stages:
           cache: false
     params:
       - gradient_boosting
+
+  # ============================================
+  # GRADIENT BOOSTING (ОБЫЧНОЕ ОБУЧЕНИЕ)
+  # ============================================
+  train_gradient_boosting:
+    cmd: python src/cross_val/train_gradient_boosting.py
+    deps:
+      - data/processed/bank
+      - src/cross_val/train_gradient_boosting.py
+    outs:
+      - models/gradient_boosting.pkl
+    metrics:
+      - metrics/gradient_boosting_metrics.json:
+          cache: false
+    params:
+      - gradient_boosting
+
   # ============================================
   # CATBOOST
   # ============================================

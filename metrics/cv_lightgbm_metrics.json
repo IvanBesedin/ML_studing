@@ -1,0 +1,173 @@
+{
+  "cv_results": {
+    "best_params": {
+      "subsample": 0.9,
+      "reg_lambda": 0.5,
+      "reg_alpha": 0,
+      "num_leaves": 31,
+      "n_estimators": 200,
+      "min_child_samples": 10,
+      "max_depth": -1,
+      "learning_rate": 0.05,
+      "colsample_bytree": 0.7,
+      "class_weight": null
+    },
+    "best_cv_score": 0.9281636352169513,
+    "scoring_metric": "roc_auc",
+    "top_10_params": [
+      {
+        "rank_test_score": 1,
+        "mean_test_score": 0.9281636352169513,
+        "std_test_score": 0.003425775743518932,
+        "param_n_estimators": 200,
+        "param_max_depth": -1,
+        "param_num_leaves": 31,
+        "weight_ratio": "None",
+        "param_learning_rate": 0.05
+      },
+      {
+        "rank_test_score": 2,
+        "mean_test_score": 0.9275478646563797,
+        "std_test_score": 0.003855760120082403,
+        "param_n_estimators": 300,
+        "param_max_depth": 6,
+        "param_num_leaves": 127,
+        "weight_ratio": "2",
+        "param_learning_rate": 0.05
+      },
+      {
+        "rank_test_score": 3,
+        "mean_test_score": 0.9273190773127261,
+        "std_test_score": 0.005367181252965721,
+        "param_n_estimators": 200,
+        "param_max_depth": -1,
+        "param_num_leaves": 63,
+        "weight_ratio": "2",
+        "param_learning_rate": 0.05
+      },
+      {
+        "rank_test_score": 4,
+        "mean_test_score": 0.927279862966207,
+        "std_test_score": 0.005272712627158985,
+        "param_n_estimators": 300,
+        "param_max_depth": -1,
+        "param_num_leaves": 15,
+        "weight_ratio": "balanced",
+        "param_learning_rate": 0.05
+      },
+      {
+        "rank_test_score": 5,
+        "mean_test_score": 0.9272595532623253,
+        "std_test_score": 0.0038790122589116645,
+        "param_n_estimators": 500,
+        "param_max_depth": 20,
+        "param_num_leaves": 31,
+        "weight_ratio": "8",
+        "param_learning_rate": 0.01
+      },
+      {
+        "rank_test_score": 6,
+        "mean_test_score": 0.9272532440748089,
+        "std_test_score": 0.005333176885808412,
+        "param_n_estimators": 300,
+        "param_max_depth": -1,
+        "param_num_leaves": 15,
+        "weight_ratio": "2",
+        "param_learning_rate": 0.05
+      },
+      {
+        "rank_test_score": 7,
+        "mean_test_score": 0.9271863310871196,
+        "std_test_score": 0.00481621342479333,
+        "param_n_estimators": 100,
+        "param_max_depth": 20,
+        "param_num_leaves": 127,
+        "weight_ratio": "8",
+        "param_learning_rate": 0.05
+      },
+      {
+        "rank_test_score": 8,
+        "mean_test_score": 0.9270541194989261,
+        "std_test_score": 0.004778742513301786,
+        "param_n_estimators": 200,
+        "param_max_depth": 10,
+        "param_num_leaves": 127,
+        "weight_ratio": "2",
+        "param_learning_rate": 0.05
+      },
+      {
+        "rank_test_score": 9,
+        "mean_test_score": 0.9270225397636287,
+        "std_test_score": 0.00392586917735097,
+        "param_n_estimators": 100,
+        "param_max_depth": 10,
+        "param_num_leaves": 15,
+        "weight_ratio": "balanced",
+        "param_learning_rate": 0.1
+      },
+      {
+        "rank_test_score": 10,
+        "mean_test_score": 0.9270201940506297,
+        "std_test_score": 0.00429063155425451,
+        "param_n_estimators": 300,
+        "param_max_depth": 15,
+        "param_num_leaves": 15,
+        "weight_ratio": "None",
+        "param_learning_rate": 0.05
+      }
+    ],
+    "n_estimators": 200,
+    "best_iteration": 0,
+    "feature_importances": [
+      638,
+      9,
+      667,
+      127,
+      67,
+      729,
+      972,
+      214,
+      464,
+      100,
+      31,
+      38,
+      37,
+      86,
+      469,
+      550,
+      35,
+      37,
+      87,
+      13,
+      86,
+      12,
+      125,
+      21,
+      55,
+      37,
+      62,
+      39,
+      24,
+      13,
+      29,
+      11,
+      19,
+      25,
+      27,
+      28,
+      4,
+      13
+    ],
+    "search_time_seconds": 6.360402428309123
+  },
+  "test_metrics": {
+    "Accuracy": 0.8678907299596955,
+    "Precision": 0.8349429323968394,
+    "Recall": 0.8988657844990549,
+    "F1-Score": 0.865725989986345,
+    "ROC-AUC": 0.9297373607368379,
+    "PR-AUC": 0.8984377887225788
+  },
+  "total_time_seconds": 411.5845146179199,
+  "params_file": "params.yaml"
+}

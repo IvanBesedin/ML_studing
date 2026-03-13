@@ -702,3 +702,251 @@ stages:
       hash: md5
       md5: cafa2329b7c10ddfd5fb928988d09066
       size: 96650768
+  cv_log_reg:
+    cmd: python src/cross_val/cv_log_reg.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/cross_val/cv_log_reg.py
+      hash: md5
+      md5: d15ce48450a3c2fba92dc1f2850a0bfa
+      size: 11150
+    params:
+      params.yaml:
+        cv_log_reg:
+          cv_splits: 5
+          random_state: 42
+          n_jobs: -1
+          verbose: 0
+          class_weights:
+          - 2
+          - 4
+          - 6
+          - 8
+          - 10
+          - 12
+          C_values:
+          - 0.001
+          - 0.01
+          - 0.1
+          - 1
+          - 10
+          - 100
+          max_iter_values:
+          - 1000
+          - 5000
+          l1_ratio_values:
+          - 0.15
+          - 0.5
+          - 0.85
+    outs:
+    - path: metrics/cv_log_reg_metrics.json
+      hash: md5
+      md5: ad489654d535fb043a1e5640397e683b
+      size: 3722
+  cv_decision_tree:
+    cmd: python src/cross_val/cv_decision_tree.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/cross_val/cv_decision_tree.py
+      hash: md5
+      md5: 1c0e5acf0f7e8960ca0c2cdbbd05cce2
+      size: 11787
+    params:
+      params.yaml:
+        cv_decision_tree:
+          cv_splits: 5
+          random_state: 42
+          n_jobs: -1
+          verbose: 0
+          scoring: f1
+          n_iter: 200
+          criterion:
+          - gini
+          - entropy
+          - log_loss
+          splitter:
+          - best
+          - random
+          max_depth:
+          - 
+          - 5
+          - 10
+          - 15
+          - 20
+          - 30
+          min_samples_split:
+          - 2
+          - 5
+          - 10
+          - 20
+          - 50
+          min_samples_leaf:
+          - 1
+          - 5
+          - 10
+          - 20
+          max_features:
+          - 
+          - sqrt
+          - log2
+          class_weights:
+          - 2
+          - 4
+          - 6
+          - 8
+          - 10
+          - 12
+    outs:
+    - path: metrics/cv_decision_tree_metrics.json
+      hash: md5
+      md5: bb17afde602501958ce86e701f31a35f
+      size: 4672
+  cv_extra_trees:
+    cmd: python src/cross_val/cv_extra_trees.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/cross_val/cv_extra_trees.py
+      hash: md5
+      md5: 0f907c2e92c4e73bdd8068e1510511b8
+      size: 12233
+    params:
+      params.yaml:
+        cv_extra_trees:
+          cv_splits: 5
+          random_state: 42
+          n_jobs: -1
+          verbose: 0
+          scoring: roc_auc
+          n_iter: 500
+          n_estimators:
+          - 100
+          - 200
+          - 300
+          - 500
+          max_depth:
+          - 10
+          - 20
+          - 30
+          - 
+          min_samples_split:
+          - 2
+          - 5
+          - 10
+          - 20
+          min_samples_leaf:
+          - 1
+          - 5
+          - 10
+          max_features:
+          - sqrt
+          - log2
+          - 
+          - 0.5
+          - 0.7
+          bootstrap:
+          - true
+          - false
+          class_weights:
+          - 2
+          - 4
+          - 8
+          - 10
+          - 12
+    outs:
+    - path: metrics/cv_extra_trees_metrics.json
+      hash: md5
+      md5: f0a451b6994a966af1c7be6e0624c0ec
+      size: 4844
+  cv_lightgbm:
+    cmd: python src/cross_val/cv_lightgbm.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/cross_val/cv_lightgbm.py
+      hash: md5
+      md5: cad99239a8563efe018d1bfc05960bac
+      size: 12612
+    params:
+      params.yaml:
+        cv_lightgbm:
+          cv_splits: 5
+          random_state: 42
+          n_jobs: -1
+          verbose: -1
+          verbose_level: 0
+          scoring: roc_auc
+          n_iter: 300
+          force_col_wise: true
+          n_estimators:
+          - 100
+          - 200
+          - 300
+          - 500
+          max_depth:
+          - 6
+          - 10
+          - 15
+          - 20
+          - -1
+          num_leaves:
+          - 15
+          - 31
+          - 63
+          - 127
+          learning_rate:
+          - 0.01
+          - 0.05
+          - 0.1
+          - 0.2
+          min_child_samples:
+          - 10
+          - 20
+          - 50
+          - 100
+          subsample:
+          - 0.7
+          - 0.8
+          - 0.9
+          - 1.0
+          colsample_bytree:
+          - 0.7
+          - 0.8
+          - 0.9
+          - 1.0
+          class_weights:
+          - 2
+          - 4
+          - 6
+          - 8
+          - 10
+          - 12
+          reg_alpha:
+          - 0
+          - 0.1
+          - 0.5
+          - 1.0
+          reg_lambda:
+          - 0
+          - 0.1
+          - 0.5
+          - 1.0
+    outs:
+    - path: metrics/cv_lightgbm_metrics.json
+      hash: md5
+      md5: 4b2202294e22f42d0777cb139fcc6ecb
+      size: 4489

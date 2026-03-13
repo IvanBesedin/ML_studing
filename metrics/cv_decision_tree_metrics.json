@@ -1,0 +1,160 @@
+{
+  "cv_results": {
+    "best_params": {
+      "splitter": "best",
+      "min_samples_split": 50,
+      "min_samples_leaf": 5,
+      "max_features": null,
+      "max_depth": 20,
+      "criterion": "entropy",
+      "class_weight": "balanced"
+    },
+    "best_cv_score": 0.8318379417953974,
+    "scoring_metric": "f1",
+    "top_10_params": [
+      {
+        "rank_test_score": 1,
+        "mean_test_score": 0.8318379417953974,
+        "std_test_score": 0.006249675422800899,
+        "param_max_depth": 20,
+        "param_criterion": "entropy",
+        "param_min_samples_leaf": 5,
+        "weight_ratio": "balanced"
+      },
+      {
+        "rank_test_score": 2,
+        "mean_test_score": 0.8295795897877027,
+        "std_test_score": 0.007649320919818988,
+        "param_max_depth": 30,
+        "param_criterion": "entropy",
+        "param_min_samples_leaf": 20,
+        "weight_ratio": "2"
+      },
+      {
+        "rank_test_score": 3,
+        "mean_test_score": 0.8252906932151488,
+        "std_test_score": 0.00830396702770449,
+        "param_max_depth": null,
+        "param_criterion": "gini",
+        "param_min_samples_leaf": 5,
+        "weight_ratio": "2"
+      },
+      {
+        "rank_test_score": 4,
+        "mean_test_score": 0.8249206324439257,
+        "std_test_score": 0.008264024451264278,
+        "param_max_depth": 15,
+        "param_criterion": "log_loss",
+        "param_min_samples_leaf": 20,
+        "weight_ratio": "2"
+      },
+      {
+        "rank_test_score": 5,
+        "mean_test_score": 0.8245532105454633,
+        "std_test_score": 0.004025038696265538,
+        "param_max_depth": 30,
+        "param_criterion": "gini",
+        "param_min_samples_leaf": 10,
+        "weight_ratio": "2"
+      },
+      {
+        "rank_test_score": 6,
+        "mean_test_score": 0.8234754027307412,
+        "std_test_score": 0.010988961643621923,
+        "param_max_depth": null,
+        "param_criterion": "entropy",
+        "param_min_samples_leaf": 20,
+        "weight_ratio": "None"
+      },
+      {
+        "rank_test_score": 7,
+        "mean_test_score": 0.8229741435583506,
+        "std_test_score": 0.005909711999172289,
+        "param_max_depth": 30,
+        "param_criterion": "gini",
+        "param_min_samples_leaf": 10,
+        "weight_ratio": "4"
+      },
+      {
+        "rank_test_score": 8,
+        "mean_test_score": 0.8223642994172033,
+        "std_test_score": 0.008317873861825873,
+        "param_max_depth": 15,
+        "param_criterion": "log_loss",
+        "param_min_samples_leaf": 10,
+        "weight_ratio": "None"
+      },
+      {
+        "rank_test_score": 9,
+        "mean_test_score": 0.8192277402878135,
+        "std_test_score": 0.00356743841629789,
+        "param_max_depth": null,
+        "param_criterion": "gini",
+        "param_min_samples_leaf": 5,
+        "weight_ratio": "8"
+      },
+      {
+        "rank_test_score": 10,
+        "mean_test_score": 0.8186133987142614,
+        "std_test_score": 0.002450848798916771,
+        "param_max_depth": 15,
+        "param_criterion": "log_loss",
+        "param_min_samples_leaf": 5,
+        "weight_ratio": "4"
+      }
+    ],
+    "tree_depth": 19,
+    "tree_leaves": 289,
+    "feature_importances": [
+      0.04727004770618959,
+      0.0,
+      0.044595686735805676,
+      0.03417638727609382,
+      0.004770330962604617,
+      0.054872086381508214,
+      0.3980225351536802,
+      0.016742205962888158,
+      0.02805005524695058,
+      0.009275413785031607,
+      0.0016199360546963596,
+      0.0004473688292994803,
+      0.0010466342422552949,
+      0.0016483796685310742,
+      0.08342926353313881,
+      0.0553713253940206,
+      0.0,
+      0.004142733966408601,
+      0.10287695394808684,
+      0.0005690766662802606,
+      0.0030204583837889617,
+      0.002847471972419243,
+      0.08694598250317694,
+      0.0029436382296561467,
+      0.0004812366754721216,
+      0.0032511269849247616,
+      0.0021837154396420473,
+      0.00368555497209517,
+      0.0007310117078776966,
+      0.0,
+      0.000887417082236331,
+      0.0,
+      0.0,
+      0.0006277538777539265,
+      0.0016480690637650302,
+      0.0,
+      0.0018201415937217703,
+      0.0
+    ],
+    "search_time_seconds": 0.018726127624511722
+  },
+  "test_metrics": {
+    "Accuracy": 0.8459471562919839,
+    "Precision": 0.8216216216216217,
+    "Recall": 0.8620037807183365,
+    "F1-Score": 0.8413284132841329,
+    "ROC-AUC": 0.891207818847283,
+    "PR-AUC": 0.8387700495740555
+  },
+  "total_time_seconds": 3.817625045776367,
+  "params_file": "params.yaml"
+}
