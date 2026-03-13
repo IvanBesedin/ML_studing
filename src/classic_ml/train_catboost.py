@@ -1,5 +1,5 @@
 # ============================================================================
-# ЛОГИСТИЧЕСКАЯ РЕГРЕССИЯ — ОБУЧЕНИЕ МОДЕЛИ
+# CATBOOST — ОБУЧЕНИЕ МОДЕЛИ
 # ============================================================================
 import json
 import os
@@ -7,7 +7,7 @@ import pickle
 import time
 import numpy as np
 import yaml
-from sklearn.linear_model import LogisticRegression
+from catboost import CatBoostClassifier
 from sklearn.metrics import (accuracy_score, precision_score, recall_score, 
                              f1_score, roc_auc_score, average_precision_score)
 
@@ -27,20 +27,20 @@ def load_data(data_dir: str) -> tuple:
     return X_train, X_test, y_train, y_test
 
 
-def train_model(X_train, y_train, params: dict) -> LogisticRegression:
+def train_model(X_train, y_train, params: dict) -> CatBoostClassifier:
     """
-    Обучение модели логистической регрессии.
-    params — любой словарь параметров для LogisticRegression
+    Обучение модели CatBoost.
+    params — любой словарь параметров для CatBoostClassifier
     """
-    # Фильтруем только валидные параметры для sklearn
+    # Фильтруем только валидные параметры для catboost
     valid_params = {k: v for k, v in params.items() if k != 'random_state'}
     
     # random_state всегда фиксируем для воспроизводимости
     valid_params['random_state'] = params.get('random_state', 42)
     
-    log_reg = LogisticRegression(**valid_params)
-    log_reg.fit(X_train, y_train)
-    return log_reg
+    cb = CatBoostClassifier(**valid_params)
+    cb.fit(X_train, y_train, verbose=0)
+    return cb
 
 
 def evaluate_model(model, X_test, y_test) -> dict:
@@ -75,20 +75,20 @@ def save_metrics(metrics: dict, output_path: str):
 
 def main():
     print("=" * 60)
-    print(" ЛОГИСТИЧЕСКАЯ РЕГРЕССИЯ")
+    print("🔴 CATBOOST")
     print("=" * 60)
 
     # Пути (можно переопределить через аргументы)
     data_dir = "data/processed/bank"
     params_path = "params.yaml"
-    model_output = "models/log_reg.pkl"
-    metrics_output = "metrics/log_reg_metrics.json"
+    model_output = "models/catboost.pkl"
+    metrics_output = "metrics/catboost_metrics.json"
 
     # Загрузка параметров
     print(f"\n📂 Загрузка параметров из: {params_path}")
     all_params = load_params(params_path)
-    log_reg_params = all_params.get("log_reg", {})
-    print(f"   Параметры модели: {log_reg_params}")
+    cb_params = all_params.get("catboost", {})
+    print(f"   Параметры модели: {cb_params}")
 
     # Загрузка данных
     print(f"\n📂 Загрузка данных из: {data_dir}")
@@ -98,27 +98,27 @@ def main():
     # Обучение модели
     print("\n🔧 Обучение модели...")
     start_time = time.time()
-    model = train_model(X_train, y_train, log_reg_params)
+    model = train_model(X_train, y_train, cb_params)
     train_time = time.time() - start_time
 
     # Предсказания
-    y_pred_lr = model.predict(X_test)
-    y_proba_lr = model.predict_proba(X_test)[:, 1]
+    y_pred_cb = model.predict(X_test)
+    y_proba_cb = model.predict_proba(X_test)[:, 1]
 
     # Метрики
-    metrics_lr = {
-        'Accuracy': float(accuracy_score(y_test, y_pred_lr)),
-        'Precision': float(precision_score(y_test, y_pred_lr, zero_division=0)),
-        'Recall': float(recall_score(y_test, y_pred_lr, zero_division=0)),
-        'F1-Score': float(f1_score(y_test, y_pred_lr, zero_division=0)),
-        'ROC-AUC': float(roc_auc_score(y_test, y_proba_lr)),
-        'PR-AUC': float(average_precision_score(y_test, y_proba_lr)),
+    metrics_cb = {
+        'Accuracy': float(accuracy_score(y_test, y_pred_cb)),
+        'Precision': float(precision_score(y_test, y_pred_cb, zero_division=0)),
+        'Recall': float(recall_score(y_test, y_pred_cb, zero_division=0)),
+        'F1-Score': float(f1_score(y_test, y_pred_cb, zero_division=0)),
+        'ROC-AUC': float(roc_auc_score(y_test, y_proba_cb)),
+        'PR-AUC': float(average_precision_score(y_test, y_proba_cb)),
         'Time (s)': float(train_time)
     }
 
     print(f"⏱️ Время обучения: {train_time:.3f} сек")
     print(f"\n📊 МЕТРИКИ НА ТЕСТЕ:")
-    for name, value in metrics_lr.items():
+    for name, value in metrics_cb.items():
         if name != 'Time (s)':
             print(f"  {name:12s}: {value:.4f}")
 
@@ -128,7 +128,7 @@ def main():
 
     # Сохранение метрик
     print(f"💾 Сохранение метрик: {metrics_output}")
-    save_metrics(metrics_lr, metrics_output)
+    save_metrics(metrics_cb, metrics_output)
 
     print("\n✅ ОБУЧЕНИЕ ЗАВЕРШЕНО!")
     print("=" * 60)

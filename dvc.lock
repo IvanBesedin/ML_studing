@@ -313,3 +313,392 @@ stages:
       hash: md5
       md5: d95d532a09707080efc478c0f1742f35
       size: 9355672
+  train_extra_trees:
+    cmd: python src/classic_ml/train_extra_trees.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_extra_trees.py
+      hash: md5
+      md5: 2f80be9d0dc3a4fc1c62965b095cb3e6
+      size: 5376
+    params:
+      params.yaml:
+        extra_trees:
+          n_estimators: 200
+          max_depth: 15
+          min_samples_split: 20
+          min_samples_leaf: 10
+          random_state: 42
+          class_weight: balanced
+          n_jobs: -1
+          bootstrap: true
+          criterion: gini
+          max_features:
+    outs:
+    - path: metrics/extra_trees_metrics.json
+      hash: md5
+      md5: 6de0152dcb9e09b2e4404acfc9fd1b79
+      size: 245
+    - path: models/extra_trees.pkl
+      hash: md5
+      md5: be35065b69221b6b1faee645a9d0db83
+      size: 9831629
+  train_lightgbm:
+    cmd: python src/classic_ml/train_lightgbm.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_lightgbm.py
+      hash: md5
+      md5: 601c547508dc247b5a7569ebbd5eb942
+      size: 5355
+    params:
+      params.yaml:
+        lightgbm:
+          n_estimators: 200
+          learning_rate: 0.05
+          max_depth: 10
+          num_leaves: 31
+          min_child_samples: 20
+          random_state: 42
+          class_weight: balanced
+          n_jobs: -1
+          verbose: -1
+          subsample: 1.0
+          colsample_bytree: 1.0
+          reg_alpha: 0.0
+          reg_lambda: 1.0
+    outs:
+    - path: metrics/lightgbm_metrics.json
+      hash: md5
+      md5: eb20aae9562d7b773ea78c2db0d447c9
+      size: 245
+    - path: models/lightgbm.pkl
+      hash: md5
+      md5: 937c43478e42cb4f55f0c83b4959756e
+      size: 698530
+  train_gradient_boosting:
+    cmd: python src/classic_ml/train_gradient_boosting.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_gradient_boosting.py
+      hash: md5
+      md5: c9a755d3f0641b3b172707edeecbc6b8
+      size: 5436
+    params:
+      params.yaml:
+        gradient_boosting:
+          n_estimators: 150
+          learning_rate: 0.05
+          max_depth: 5
+          min_samples_split: 20
+          min_samples_leaf: 10
+          random_state: 42
+          subsample: 1.0
+          max_features:
+          min_impurity_decrease: 0.0
+          validation_fraction: 0.1
+          n_iter_no_change:
+          tol: 0.0001
+    outs:
+    - path: metrics/gradient_boosting_metrics.json
+      hash: md5
+      md5: 5a1397d0ac1262855f78d20be82cdaf6
+      size: 241
+    - path: models/gradient_boosting.pkl
+      hash: md5
+      md5: 47a6004eb3e6dc05bea2b9ee1d292e1c
+      size: 606823
+  train_catboost:
+    cmd: python src/classic_ml/train_catboost.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_catboost.py
+      hash: md5
+      md5: c24a39bc2403916c028d940b29a00b08
+      size: 5354
+    params:
+      params.yaml:
+        catboost:
+          iterations: 200
+          learning_rate: 0.05
+          depth: 6
+          random_state: 42
+          verbose: 0
+          class_weights:
+          l2_leaf_reg: 3
+          subsample: 1.0
+          colsample_bylevel: 1.0
+          min_data_in_leaf: 1
+          border_count: 254
+    outs:
+    - path: metrics/catboost_metrics.json
+      hash: md5
+      md5: 7850c342f2642cf33e5cf0147490da43
+      size: 244
+    - path: models/catboost.pkl
+      hash: md5
+      md5: 8998b46d46cb37e30624d80121afb9db
+      size: 232203
+  train_bagging:
+    cmd: python src/classic_ml/train_bagging.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_bagging.py
+      hash: md5
+      md5: d6f45ef3f3f486ae6193cda4ac7da766
+      size: 5851
+    params:
+      params.yaml:
+        bagging:
+          n_estimators: 50
+          max_samples: 0.8
+          max_features: 0.8
+          bootstrap: true
+          random_state: 42
+          n_jobs: -1
+        bagging_base_estimator:
+          n_estimators: 500
+          max_depth:
+          min_samples_split: 10
+          min_samples_leaf: 1
+          max_features: sqrt
+          class_weight: balanced
+          bootstrap: true
+          random_state: 42
+          n_jobs: -1
+    outs:
+    - path: metrics/bagging_metrics.json
+      hash: md5
+      md5: cd4ea1fab9633a35470384c4f7460cd3
+      size: 242
+    - path: models/bagging.pkl
+      hash: md5
+      md5: feedaec67a93e953f13725490de07890
+      size: 2011289115
+  train_blending:
+    cmd: python src/classic_ml/train_blending.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_blending.py
+      hash: md5
+      md5: 715d47e4923c19338f5dd79b9d99c24c
+      size: 8616
+    params:
+      params.yaml:
+        blending:
+          cv_splits: 5
+          random_state: 42
+        blending_catboost:
+          iterations: 200
+          depth: 10
+          learning_rate: 0.05
+          l2_leaf_reg: 5
+          subsample: 0.8
+          colsample_bylevel: 0.8
+          scale_pos_weight: 1
+          min_data_in_leaf: 10
+          random_state: 42
+          verbose: 0
+          allow_writing_files: false
+        blending_des_tree:
+          splitter: best
+          min_samples_split: 50
+          min_samples_leaf: 5
+          max_features:
+          max_depth: 20
+          criterion: entropy
+          class_weight: balanced
+          random_state: 42
+        blending_extra_trees:
+          n_estimators: 300
+          min_samples_split: 10
+          min_samples_leaf: 1
+          max_features:
+          max_depth: 30
+          class_weight:
+          bootstrap: true
+          random_state: 42
+          n_jobs: -1
+        blending_grad_boost:
+          subsample: 1.0
+          n_estimators: 300
+          min_samples_split: 50
+          min_samples_leaf: 20
+          min_impurity_decrease: 0.01
+          max_features: 0.7
+          max_depth: 7
+          random_state: 42
+        blending_lgbm:
+          subsample: 0.9
+          reg_lambda: 0.5
+          reg_alpha: 0
+          num_leaves: 31
+          n_estimators: 200
+          min_child_samples: 10
+          max_depth: -1
+          learning_rate: 0.05
+          colsample_bytree: 0.7
+          class_weight:
+          random_state: 42
+          n_jobs: -1
+          verbose: -1
+        blending_linreg:
+          C: 0.1
+          class_weight:
+            0: 1
+            1: 2
+          max_iter: 1000
+          penalty: l1
+          solver: liblinear
+          tol: 0.0001
+          random_state: 42
+        blending_meta_model:
+          max_iter: 1000
+          random_state: 42
+        blending_nb:
+          var_smoothing: 1e-09
+        blending_rf:
+          n_estimators: 500
+          min_samples_split: 10
+          min_samples_leaf: 1
+          max_features: sqrt
+          max_depth:
+          class_weight: balanced
+          bootstrap: true
+          random_state: 42
+          n_jobs: -1
+    outs:
+    - path: metrics/blending_metrics.json
+      hash: md5
+      md5: 2c7f45d3c87f3bfdea2c653d7800c103
+      size: 243
+    - path: models/blending.pkl
+      hash: md5
+      md5: c3f045bd97eabb4ea8764b6aeeac61bf
+      size: 770
+  train_stacking:
+    cmd: python src/classic_ml/train_stacking.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_stacking.py
+      hash: md5
+      md5: ce57445883ef2b70b78c8307f436ffce
+      size: 7615
+    params:
+      params.yaml:
+        stacking:
+          cv_splits: 5
+          random_state: 42
+          n_jobs: -1
+          passthrough: false
+        stacking_des_tree:
+          splitter: best
+          min_samples_split: 50
+          min_samples_leaf: 5
+          max_features:
+          max_depth: 20
+          criterion: entropy
+          class_weight: balanced
+          random_state: 42
+        stacking_extra_trees:
+          n_estimators: 300
+          min_samples_split: 10
+          min_samples_leaf: 1
+          max_features:
+          max_depth: 30
+          class_weight:
+          bootstrap: true
+          random_state: 42
+          n_jobs: -1
+        stacking_grad_boost:
+          subsample: 1.0
+          n_estimators: 300
+          min_samples_split: 50
+          min_samples_leaf: 20
+          min_impurity_decrease: 0.01
+          max_features: 0.7
+          max_depth: 7
+          random_state: 42
+        stacking_lgbm:
+          subsample: 0.9
+          reg_lambda: 0.5
+          reg_alpha: 0
+          num_leaves: 31
+          n_estimators: 200
+          min_child_samples: 10
+          max_depth: -1
+          learning_rate: 0.05
+          colsample_bytree: 0.7
+          class_weight:
+          random_state: 42
+          n_jobs: -1
+          verbose: -1
+        stacking_linreg:
+          C: 0.1
+          class_weight:
+            0: 1
+            1: 2
+          max_iter: 1000
+          penalty: l1
+          solver: liblinear
+          tol: 0.0001
+          random_state: 42
+        stacking_meta_model:
+          C: 0.1
+          class_weight:
+            0: 1
+            1: 2
+          max_iter: 1000
+          penalty: l1
+          solver: liblinear
+          tol: 0.0001
+          random_state: 42
+        stacking_nb:
+          var_smoothing: 1e-09
+        stacking_rf:
+          n_estimators: 500
+          min_samples_split: 10
+          min_samples_leaf: 1
+          max_features: sqrt
+          max_depth:
+          class_weight: balanced
+          bootstrap: true
+          random_state: 42
+          n_jobs: -1
+    outs:
+    - path: metrics/stacking_metrics.json
+      hash: md5
+      md5: 1ccf56f22de05cc66c66fe0995ba987a
+      size: 243
+    - path: models/stacking.pkl
+      hash: md5
+      md5: cafa2329b7c10ddfd5fb928988d09066
+      size: 96650768

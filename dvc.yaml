@@ -124,7 +124,23 @@ stages:
       - decision_tree
 
   # ============================================
-  #  RANDOM FOREST
+  # ЛОГИСТИЧЕСКАЯ РЕГРЕССИЯ (CROSS-VALIDATION)
+  # ============================================
+  cv_log_reg:
+    cmd: python src/cross_val/cv_log_reg.py
+    deps:
+      - data/processed/bank
+      - src/cross_valcv_log_reg.py
+    # 🔧 НЕТ outs — модель не сохраняется!
+    metrics:
+      - metrics/cv_log_reg_metrics.json:
+          cache: false
+    params:
+      - cv_log_reg
+
+
+  # ============================================
+  # RANDOM FOREST
   # ============================================
   train_random_forest:
     cmd: python src/classic_ml/train_random_forest.py
@@ -138,3 +154,126 @@ stages:
           cache: false
     params:
       - random_forest
+  
+  # ============================================
+  # EXTRA TREES
+  # ============================================
+  train_extra_trees:
+    cmd: python src/classic_ml/train_extra_trees.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_extra_trees.py
+    outs:
+      - models/extra_trees.pkl
+    metrics:
+      - metrics/extra_trees_metrics.json:
+          cache: false
+    params:
+      - extra_trees
+  # ============================================
+  # LIGHTGBM
+  # ============================================
+  train_lightgbm:
+    cmd: python src/classic_ml/train_lightgbm.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_lightgbm.py
+    outs:
+      - models/lightgbm.pkl
+    metrics:
+      - metrics/lightgbm_metrics.json:
+          cache: false
+    params:
+      - lightgbm
+  # ============================================
+  # GRADIENT BOOSTING
+  # ============================================
+  train_gradient_boosting:
+    cmd: python src/classic_ml/train_gradient_boosting.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_gradient_boosting.py
+    outs:
+      - models/gradient_boosting.pkl
+    metrics:
+      - metrics/gradient_boosting_metrics.json:
+          cache: false
+    params:
+      - gradient_boosting
+  # ============================================
+  # CATBOOST
+  # ============================================
+  train_catboost:
+    cmd: python src/classic_ml/train_catboost.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_catboost.py
+    outs:
+      - models/catboost.pkl
+    metrics:
+      - metrics/catboost_metrics.json:
+          cache: false
+    params:
+      - catboost
+
+  # ============================================
+  # BAGGING ENSEMBLE
+  # ============================================
+  train_bagging:
+    cmd: python src/classic_ml/train_bagging.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_bagging.py
+    outs:
+      - models/bagging.pkl
+    metrics:
+      - metrics/bagging_metrics.json:
+          cache: false
+    params:
+      - bagging
+      - bagging_base_estimator
+
+  train_blending:
+    cmd: python src/classic_ml/train_blending.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_blending.py
+    outs:
+      - models/blending.pkl
+    metrics:
+      - metrics/blending_metrics.json:
+          cache: false
+    params:
+      - blending
+      - blending_linreg
+      - blending_des_tree
+      - blending_rf
+      - blending_extra_trees
+      - blending_lgbm
+      - blending_grad_boost
+      - blending_catboost
+      - blending_nb
+      - blending_meta_model  
+  # ============================================
+  # STACKING ENSEMBLE
+  # ============================================
+  train_stacking:
+    cmd: python src/classic_ml/train_stacking.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_stacking.py
+    outs:
+      - models/stacking.pkl
+    metrics:
+      - metrics/stacking_metrics.json:
+          cache: false
+    params:
+      - stacking
+      - stacking_linreg
+      - stacking_des_tree
+      - stacking_rf
+      - stacking_extra_trees
+      - stacking_lgbm
+      - stacking_grad_boost
+      - stacking_nb
+      - stacking_meta_model

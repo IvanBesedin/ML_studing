@@ -53,6 +53,21 @@ log_reg:
   C: 1.0
   tol: 0.0001
   
+# ============================================
+# ЛОГИСТИЧЕСКАЯ РЕГРЕССИЯ (CROSS-VALIDATION)
+# ============================================
+cv_log_reg:
+  cv_splits: 5
+  random_state: 42
+  n_jobs: -1
+  verbose: 0
+  
+  # Параметры для сетки
+  class_weights: [2, 4, 6, 8, 10, 12]
+  C_values: [0.001, 0.01, 0.1, 1, 10, 100]
+  max_iter_values: [1000, 5000]
+  l1_ratio_values: [0.15, 0.5, 0.85]
+
 decision_tree:
   max_depth: 10
   min_samples_split: 20
@@ -75,3 +90,255 @@ random_forest:
   bootstrap: true
   criterion: "gini"
   max_features: "sqrt"
+
+extra_trees:
+  n_estimators: 200
+  max_depth: 15
+  min_samples_split: 20
+  min_samples_leaf: 10
+  random_state: 42
+  class_weight: "balanced"
+  n_jobs: -1
+  bootstrap: true
+  criterion: "gini"
+  max_features: null
+
+lightgbm:
+  n_estimators: 200
+  learning_rate: 0.05
+  max_depth: 10
+  num_leaves: 31
+  min_child_samples: 20
+  random_state: 42
+  class_weight: "balanced"
+  n_jobs: -1
+  verbose: -1
+  subsample: 1.0
+  colsample_bytree: 1.0
+  reg_alpha: 0.0
+  reg_lambda: 1.0
+
+gradient_boosting:
+  n_estimators: 150
+  learning_rate: 0.05
+  max_depth: 5
+  min_samples_split: 20
+  min_samples_leaf: 10
+  random_state: 42
+  subsample: 1.0
+  max_features: null
+  min_impurity_decrease: 0.0
+  validation_fraction: 0.1
+  n_iter_no_change: null
+  tol: 0.0001
+
+catboost:
+  iterations: 200
+  learning_rate: 0.05
+  depth: 6
+  random_state: 42
+  verbose: 0
+  class_weights: null
+  l2_leaf_reg: 3
+  subsample: 1.0
+  colsample_bylevel: 1.0
+  min_data_in_leaf: 1
+  border_count: 254
+  
+bagging:
+  n_estimators: 50
+  max_samples: 0.8
+  max_features: 0.8
+  bootstrap: true
+  random_state: 42
+  n_jobs: -1
+
+bagging_base_estimator:
+  n_estimators: 500
+  max_depth: null
+  min_samples_split: 10
+  min_samples_leaf: 1
+  max_features: "sqrt"
+  class_weight: "balanced"
+  bootstrap: true
+  random_state: 42
+  n_jobs: -1
+
+blending:
+  cv_splits: 5
+  random_state: 42
+
+# Параметры для базовых моделей в Blending
+blending_linreg:
+  C: 0.1
+  class_weight: {0: 1, 1: 2}
+  max_iter: 1000
+  penalty: "l1"
+  solver: "liblinear"
+  tol: 0.0001
+  random_state: 42
+
+blending_des_tree:
+  splitter: "best"
+  min_samples_split: 50
+  min_samples_leaf: 5
+  max_features: null
+  max_depth: 20
+  criterion: "entropy"
+  class_weight: "balanced"
+  random_state: 42
+
+blending_rf:
+  n_estimators: 500
+  min_samples_split: 10
+  min_samples_leaf: 1
+  max_features: "sqrt"
+  max_depth: null
+  class_weight: "balanced"
+  bootstrap: true
+  random_state: 42
+  n_jobs: -1
+
+blending_extra_trees:
+  n_estimators: 300
+  min_samples_split: 10
+  min_samples_leaf: 1
+  max_features: null
+  max_depth: 30
+  class_weight: null
+  bootstrap: true
+  random_state: 42
+  n_jobs: -1
+
+blending_lgbm:
+  subsample: 0.9
+  reg_lambda: 0.5
+  reg_alpha: 0
+  num_leaves: 31
+  n_estimators: 200
+  min_child_samples: 10
+  max_depth: -1
+  learning_rate: 0.05
+  colsample_bytree: 0.7
+  class_weight: null
+  random_state: 42
+  n_jobs: -1
+  verbose: -1
+
+blending_grad_boost:
+  subsample: 1.0
+  n_estimators: 300
+  min_samples_split: 50
+  min_samples_leaf: 20
+  min_impurity_decrease: 0.01
+  max_features: 0.7
+  max_depth: 7
+  random_state: 42
+
+blending_catboost:
+  iterations: 200
+  depth: 10
+  learning_rate: 0.05
+  l2_leaf_reg: 5
+  subsample: 0.8
+  colsample_bylevel: 0.8
+  scale_pos_weight: 1
+  min_data_in_leaf: 10
+  random_state: 42
+  verbose: 0
+  allow_writing_files: false
+
+blending_nb:
+  var_smoothing: !!float 1e-9
+
+# Мета-модель для Blending
+blending_meta_model:
+  max_iter: 1000
+  random_state: 42
+
+# ============================================
+# STACKING ENSEMBLE
+# ============================================
+stacking:
+  cv_splits: 5
+  random_state: 42
+  n_jobs: -1
+  passthrough: false
+
+stacking_linreg:
+  C: 0.1
+  class_weight: {0: 1, 1: 2}
+  max_iter: 1000
+  penalty: "l1"
+  solver: "liblinear"
+  tol: 0.0001
+  random_state: 42
+
+stacking_des_tree:
+  splitter: "best"
+  min_samples_split: 50
+  min_samples_leaf: 5
+  max_features: null
+  max_depth: 20
+  criterion: "entropy"
+  class_weight: "balanced"
+  random_state: 42
+
+stacking_rf:
+  n_estimators: 500
+  min_samples_split: 10
+  min_samples_leaf: 1
+  max_features: "sqrt"
+  max_depth: null
+  class_weight: "balanced"
+  bootstrap: true
+  random_state: 42
+  n_jobs: -1
+
+stacking_extra_trees:
+  n_estimators: 300
+  min_samples_split: 10
+  min_samples_leaf: 1
+  max_features: null
+  max_depth: 30
+  class_weight: null
+  bootstrap: true
+  random_state: 42
+  n_jobs: -1
+
+stacking_lgbm:
+  subsample: 0.9
+  reg_lambda: 0.5
+  reg_alpha: 0
+  num_leaves: 31
+  n_estimators: 200
+  min_child_samples: 10
+  max_depth: -1
+  learning_rate: 0.05
+  colsample_bytree: 0.7
+  class_weight: null
+  random_state: 42
+  n_jobs: -1
+  verbose: -1
+
+stacking_grad_boost:
+  subsample: 1.0
+  n_estimators: 300
+  min_samples_split: 50
+  min_samples_leaf: 20
+  min_impurity_decrease: 0.01
+  max_features: 0.7
+  max_depth: 7
+  random_state: 42
+
+stacking_nb:
+  var_smoothing: 0.000000001
+
+stacking_meta_model:
+  C: 0.1
+  class_weight: {0: 1, 1: 2}
+  max_iter: 1000
+  penalty: "l1"
+  solver: "liblinear"
+  tol: 0.0001
+  random_state: 42
