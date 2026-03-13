@@ -33,3 +33,45 @@ num_epochs_bank: 30
 learning_rate_bank: 0.001
 step_size_bank: 30
 gamma_bank: 0.1
+
+# ============================================
+# ОБЩИЕ ПАРАМЕТРЫ
+# ============================================
+random_state: 42
+test_size: 0.2
+cv_splits: 5
+
+# ============================================
+# ЛОГИСТИЧЕСКАЯ РЕГРЕССИЯ
+# ============================================
+log_reg:
+  max_iter: 1000
+  random_state: 42
+  class_weight: "balanced"
+  solver: "lbfgs"
+  penalty: "l2"
+  C: 1.0
+  tol: 0.0001
+  
+decision_tree:
+  max_depth: 10
+  min_samples_split: 20
+  min_samples_leaf: 10
+  random_state: 42
+  class_weight: "balanced"
+  criterion: "gini"
+  splitter: "best"
+  max_features: null
+  min_impurity_decrease: 0.0
+
+random_forest:
+  n_estimators: 200
+  max_depth: 15
+  min_samples_split: 20
+  min_samples_leaf: 10
+  random_state: 42
+  class_weight: "balanced"
+  n_jobs: -1
+  bootstrap: true
+  criterion: "gini"
+  max_features: "sqrt"

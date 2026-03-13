@@ -94,3 +94,47 @@ stages:
       - fine_tuning_gamma
       - num_frozen_layers
       - freeze_bn
+  # ============================================
+  # ЛОГИСТИЧЕСКАЯ РЕГРЕССИЯ
+  # ============================================
+  train_log_reg:
+    cmd: python src/classic_ml/train_log_reg.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_log_reg.py
+    outs:
+      - models/log_reg.pkl
+    metrics:
+      - metrics/log_reg_metrics.json:
+          cache: false
+    params:
+      - log_reg
+
+  train_decision_tree:
+    cmd: python src/classic_ml/train_decision_tree.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_decision_tree.py
+    outs:
+      - models/decision_tree.pkl
+    metrics:
+      - metrics/decision_tree_metrics.json:
+          cache: false
+    params:
+      - decision_tree
+
+  # ============================================
+  #  RANDOM FOREST
+  # ============================================
+  train_random_forest:
+    cmd: python src/classic_ml/train_random_forest.py
+    deps:
+      - data/processed/bank
+      - src/classic_ml/train_random_forest.py
+    outs:
+      - models/random_forest.pkl
+    metrics:
+      - metrics/random_forest_metrics.json:
+          cache: false
+    params:
+      - random_forest

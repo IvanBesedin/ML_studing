@@ -87,8 +87,8 @@ stages:
       nfiles: 4
     - path: params.yaml
       hash: md5
-      md5: e44049ce6fdcbfe9fbadb0cd4faf6915
-      size: 1010
+      md5: d1b53b8126ab96c84ab90e5f3b8b20a4
+      size: 1654
     - path: src/train_adult.py
       hash: md5
       md5: 627f611cbd2875f39db7b0c3217be5d1
@@ -108,11 +108,11 @@ stages:
     outs:
     - path: metrics/adult_metrics.json
       hash: md5
-      md5: eec62f824387bcca6e05398b02106610
+      md5: f5f3a961deebaebc7f71fd9cf349369f
       size: 232
     - path: models/adult_pretrained.pth
       hash: md5
-      md5: 61fd9a3713e06d0dbc232a47986ed841
+      md5: e41c17344eb234d8377d1cfac232bd31
       size: 33092
   prepare_bank:
     cmd: python src/prepare_bank_data.py
@@ -145,12 +145,12 @@ stages:
       nfiles: 4
     - path: models/adult_pretrained.pth
       hash: md5
-      md5: 61fd9a3713e06d0dbc232a47986ed841
+      md5: e41c17344eb234d8377d1cfac232bd31
       size: 33092
     - path: params.yaml
       hash: md5
-      md5: e44049ce6fdcbfe9fbadb0cd4faf6915
-      size: 1010
+      md5: d1b53b8126ab96c84ab90e5f3b8b20a4
+      size: 1654
     - path: src/fine_tune.py
       hash: md5
       md5: ace3c738a9d2619b6734a39fa3e89aba
@@ -172,11 +172,11 @@ stages:
     outs:
     - path: metrics/bank_finetune_metrics.json
       hash: md5
-      md5: 7e93ad8b8970b573a676a4af66247b86
-      size: 268
+      md5: 552750a40d0654cd4d03663828d0d9bf
+      size: 267
     - path: models/bank_finetuned.pth
       hash: md5
-      md5: f9e80fa7ce00d441a489676e41c46989
+      md5: b05d3e94cd2c25a5ae04e0272035b198
       size: 29966
   train_bank_scratch:
     cmd: python src/train_bank_scratch.py
@@ -215,3 +215,101 @@ stages:
       hash: md5
       md5: 21a45d32ff0a4629bca4a845f6ff1c62
       size: 16159
+  train_log_reg:
+    cmd: python src/classic_ml/train_log_reg.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_log_reg.py
+      hash: md5
+      md5: f5075df0d1844b0d36fd658c7da77f16
+      size: 5512
+    params:
+      params.yaml:
+        log_reg:
+          max_iter: 1000
+          random_state: 42
+          class_weight: balanced
+          solver: lbfgs
+          penalty: l2
+          C: 1.0
+          tol: 0.0001
+    outs:
+    - path: metrics/log_reg_metrics.json
+      hash: md5
+      md5: 851b58ecad1f61e5970c238d8a895a58
+      size: 245
+    - path: models/log_reg.pkl
+      hash: md5
+      md5: 60c612408d1df19465a1658b0ad5df0d
+      size: 1015
+  train_decision_tree:
+    cmd: python src/classic_ml/train_decision_tree.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_decision_tree.py
+      hash: md5
+      md5: 1ed55f955a3fd0cac1940d4875df79e7
+      size: 5502
+    params:
+      params.yaml:
+        decision_tree:
+          max_depth: 10
+          min_samples_split: 20
+          min_samples_leaf: 10
+          random_state: 42
+          class_weight: balanced
+          criterion: gini
+          splitter: best
+          max_features:
+          min_impurity_decrease: 0.0
+    outs:
+    - path: metrics/decision_tree_metrics.json
+      hash: md5
+      md5: 77429282e0e985e340bf38d9267da6a4
+      size: 246
+    - path: models/decision_tree.pkl
+      hash: md5
+      md5: 1d257f4ace65beb08506464f4d0b5751
+      size: 36084
+  train_random_forest:
+    cmd: python src/classic_ml/train_random_forest.py
+    deps:
+    - path: data/processed/bank
+      hash: md5
+      md5: 4720fb6bad0aec0275d60faa730e8c38.dir
+      size: 3483056
+      nfiles: 4
+    - path: src/classic_ml/train_random_forest.py
+      hash: md5
+      md5: 0ea25fad192364b0a36819455de98da7
+      size: 5426
+    params:
+      params.yaml:
+        random_forest:
+          n_estimators: 200
+          max_depth: 15
+          min_samples_split: 20
+          min_samples_leaf: 10
+          random_state: 42
+          class_weight: balanced
+          n_jobs: -1
+          bootstrap: true
+          criterion: gini
+          max_features: sqrt
+    outs:
+    - path: metrics/random_forest_metrics.json
+      hash: md5
+      md5: 5b50c2897825fc01fc35b720362b2411
+      size: 243
+    - path: models/random_forest.pkl
+      hash: md5
+      md5: d95d532a09707080efc478c0f1742f35
+      size: 9355672
