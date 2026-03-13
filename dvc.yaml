@@ -261,20 +261,20 @@ stages:
       - gradient_boosting
 
   # ============================================
-  # GRADIENT BOOSTING (ОБЫЧНОЕ ОБУЧЕНИЕ)
+  #  GRADIENT BOOSTING (CROSS-VALIDATION)
   # ============================================
-  train_gradient_boosting:
-    cmd: python src/cross_val/train_gradient_boosting.py
+  cv_gradient_boosting:
+    cmd: python src/cross_val/cv_gradient_boosting.py
     deps:
       - data/processed/bank
-      - src/cross_val/train_gradient_boosting.py
-    outs:
-      - models/gradient_boosting.pkl
+      - src/cross_val/cv_gradient_boosting.py
     metrics:
-      - metrics/gradient_boosting_metrics.json:
+      - metrics/cv_gradient_boosting_metrics.json:
           cache: false
     params:
-      - gradient_boosting
+      - cv_gradient_boosting
+
+    
 
   # ============================================
   # CATBOOST
@@ -291,6 +291,20 @@ stages:
           cache: false
     params:
       - catboost
+  # ============================================
+  # CATBOOST (CROSS-VALIDATION)
+  # ============================================
+  cv_catboost:
+    cmd: python src/cross_val/cv_catboost.py
+    deps:
+      - data/processed/bank
+      - src/cross_val/cv_catboost.py
+    metrics:
+      - metrics/cv_catboost_metrics.json:
+          cache: false
+    params:
+      - cv_catboost
+  
 
   # ============================================
   # BAGGING ENSEMBLE
